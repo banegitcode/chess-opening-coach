@@ -4,15 +4,18 @@ Learn chess openings by playing them. Pick an opening, pick your side, and the b
 
 ## How it works
 
-1. **Pick an opening.** There are 11, each with 3 to 7 variations:
+1. **Choose an opening.** Each card shows its level (Beginner, Intermediate or Advanced) and how many of its variations you've played. There are 11 openings with 49 variations in all:
    - White openings: Italian Game, Ruy Lopez, Queen's Gambit, London System, English Opening
    - Black openings: Sicilian Najdorf, French Defense, Caro-Kann, King's Indian, Scandinavian, Slav
-2. **Pick your side.**
-   - **Against it:** you play the opponent, and the coach plays the opening. When you have more than one book move, you pick one, and each choice leads to a different variation.
-   - **With it:** you play the opening, and the coach plays the opponent. It picks variations you haven't seen yet.
-3. **Play the move the arrow shows.** Click a piece and then its square, or click the move in the side panel. A move that isn't in the opening is taken back, and you're shown the right one.
+2. **Choose a side.** Play as the side that uses the opening, or as the opponent to learn how to face it. "Switch sides" changes this at any time.
+3. **Follow the arrows.** Gold arrows are your moves and blue arrows are the opponent's. The status line above the board always says what to do, and the coach panel explains why each move is played.
 
-Your progress (variations played per opening) is saved in your browser.
+- **Moving pieces:** drag a piece, or tap it and then tap a square. You can also press "Play it for me".
+- **Choosing your own variation:** when you have several good moves, each one is listed with the variation it leads to. Hover over an option to highlight its arrow.
+- **Choosing the opponent's reply:** with "Opponent's replies: I pick" turned on, you pick the opponent's move whenever it has more than one variation. Use the buttons or move the piece on the board. Switch to "Coach picks" and the coach chooses for you, preferring variations you haven't seen yet.
+- **Mistakes:** a move that isn't in the opening is taken back, and the arrow stays up. "Undo my move" steps back one of your moves.
+
+Your progress is saved in your browser.
 
 ## Run it
 
