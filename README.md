@@ -8,7 +8,7 @@ Learn chess openings by testing them. Pick an opening, then play the opponent an
    - White openings (you play Black): Italian Game, Ruy Lopez, Queen's Gambit, London System, English Opening
    - Black openings (you play White): Sicilian Najdorf, French Defense, Caro-Kann, King's Indian, Scandinavian, Slav
 2. **Make any move for the opponent.** Drag a piece, or tap it and then tap a square. Popular moves are listed with the variation each one leads to, but any legal move is allowed.
-3. **Read the coach's answer.** A gold arrow shows the best reply, with a plain-English explanation of why it's best. Every move goes into a move-by-move log:
+3. **Read the coach's answer.** A gold arrow shows the best reply. The box at the top of the screen explains, in words a fifth grader can follow, why your move and the coach's move were played. Every move goes into a move-by-move log:
    - **Your moves** are graded Book, Good move, Inaccuracy, Mistake or Blunder, with the better move named when there was one.
    - **The coach's moves** come from opening theory while you stay in the main lines (49 variations), and from the Stockfish engine once you leave them.
 4. **It runs until the opening is over:** when a main line ends, or at move 15 once you've left the main lines. Press "Keep going" to continue with the engine.

@@ -78,7 +78,14 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .status.bad .ic{background:var(--bad);color:#fff}
 .status.done{border-color:var(--good);background:var(--good-soft);color:var(--good)}
 .status.done .ic{background:var(--good);color:#fff}
-.status small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.status small{display:block;font-weight:500;font-size:14px;color:var(--muted)}
+.status{flex-direction:column;align-items:stretch;gap:10px}
+.nowline{display:flex;align-items:center;gap:12px}
+.say{display:flex;flex-direction:column;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--line);font-weight:400;font-size:15px;color:var(--ink)}
+.say .line{display:flex;gap:10px;align-items:flex-start}
+.say .line b{font-weight:600}
+.say .who{flex:none;width:10px;height:10px;border-radius:50%;margin-top:7px;background:var(--gold)}
+.say .who.you{background:var(--coach)}
 .status.bad small,.status.done small{color:inherit;opacity:.85}
 .think .ic{animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -367,6 +374,315 @@ const OPENINGS = [
 ];
 
 
+// Kid-friendly versions of every book explanation (fifth-grade reading level).
+const KID={
+"A natural recapture, but it is a mistake here.": "This looks natural, but it's a mistake. It lets White make a surprise attack on the f7 square.",
+"A safe square that also pins the knight.": "The queen moves to a safe square. It also pins the knight: the knight can't move, or the king would be in check.",
+"A trap. It leaves e5 unprotected on purpose.": "This is a trap! The e5 pawn is left unguarded on purpose to tempt White into grabbing it.",
+"Add pressure on d5.": "Aims another piece at the d5 pawn, so it's under more pressure.",
+"Aim the bishop at f7, which only Black's king defends.": "The bishop aims at the f7 pawn. Only the king guards that pawn, so it's a weak spot.",
+"Aim the last bishop at h7.": "The last bishop comes out and aims at the h7 pawn, right next to the enemy king.",
+"Ask the bishop to choose.": "A pawn pokes the bishop. Now the bishop has to decide: run away or trade itself.",
+"Ask the bishop what it wants to do.": "A pawn pokes the bishop to ask a question: will you run away, or trade yourself for my knight?",
+"Attack White's center.": "This pawn pushes against White's pawns in the middle of the board.",
+"Attack d4 and b2.": "The queen attacks two pawns at once: the one on d4 and the one on b2.",
+"Attack d4 from the side.": "This pawn attacks d4 from the side, to fight for the middle.",
+"Attack d4, the base of White's chain.": "This pawn attacks d4, the bottom of White's pawn chain. If the bottom breaks, the whole chain gets weak.",
+"Attack d4.": "This attacks the pawn on d4.",
+"Attack e4 again.": "Another piece attacks the e4 pawn, so now it's attacked twice.",
+"Attack e4 right away.": "This attacks the e4 pawn right away, so White has to protect it.",
+"Attack e4.": "This attacks the pawn on e4, so White has to protect it.",
+"Attack f7 a second time.": "The knight jumps forward to attack f7. Now two pieces are attacking that weak pawn.",
+"Attack on the kingside.": "Black starts pushing pawns toward White's king to attack it.",
+"Attack the b2 pawn.": "This attacks the b2 pawn, which nobody is guarding.",
+"Attack the center right away.": "A pawn attacks White's middle pawns right away.",
+"Attack the d4 pawn and open the center.": "This pawn attacks d4 and opens up the middle of the board.",
+"Attack the knight that defends e5.": "The bishop attacks the knight on c6. That knight is the one guarding the e5 pawn.",
+"Black attacks e4 instead of copying White.": "Black brings out a knight and attacks the e4 pawn instead of copying White.",
+"Black builds a solid wall.": "Black builds a strong wall of pawns that is hard to break.",
+"Black castles too.": "Black castles too. The king hides safely in the corner, and the rook comes out to help.",
+"Black castles.": "Black castles. The king hides safely in the corner, and the rook comes out to help.",
+"Black claims an equal share of the center.": "Black puts a pawn in the middle too, so White doesn't get the middle all to itself.",
+"Black copies White.": "Black makes the same move as White.",
+"Black copies again.": "Black copies White again.",
+"Black copies the idea and aims at f2.": "Black copies White. This bishop aims at f2, White's weak spot.",
+"Black copies.": "Black copies White's move.",
+"Black does the same.": "Black does the same thing as White.",
+"Black fights for the center.": "Black fights for the middle of the board.",
+"Black gives a pawn back to get active.": "Black gives away a pawn to get the pieces moving fast.",
+"Black grabs space.": "Black pushes a pawn forward to get more room.",
+"Black matches it.": "Black puts a pawn in the middle too.",
+"Black moves the knight away.": "The knight runs away so it doesn't get captured.",
+"Black prepares ...e5.": "Black gets ready to push the e-pawn to e5.",
+"Black takes back.": "Black captures back, so the trade is even.",
+"Black takes the center.": "Black puts a pawn in the middle of the board.",
+"Black takes the e4 pawn.": "Black captures the pawn on e4.",
+"Black takes the knight.": "Black captures the knight.",
+"Black takes the pawn.": "Black captures the pawn.",
+"Black wants Bg7.": "Black wants to put the bishop on g7, where it can look down a long slanted line.",
+"Black wants a King's Indian setup.": "Black sets up the King's Indian: the bishop goes to g7 and the king hides behind it.",
+"Black's bishop takes the long diagonal.": "Black's bishop sits on the longest slanted line on the board, aiming at White's side.",
+"Black's bishop will go to b7.": "Black's bishop will go to b7 to aim down the long slanted line.",
+"Block the bishop's line to f7.": "A pawn blocks the bishop's path to f7, so the f7 pawn is safe.",
+"Block the bishop.": "A pawn steps in the bishop's way, so it can't shoot down that line.",
+"Block the check and give up a pawn for quick development.": "A pawn blocks the check. Black gives that pawn away to get pieces out fast.",
+"Block the check.": "A piece steps in the way, so the king isn't in check anymore.",
+"Break the pin.": "This gets out of the pin. Now the knight is free to move again.",
+"Bring the bishop back to safety.": "The bishop goes back home where it is safe.",
+"Bring the bishop out anyway.": "The bishop comes out anyway so it can join the game.",
+"Bring the bishop out before e3 blocks it.": "The bishop comes out now, before a pawn on e3 blocks its way.",
+"Bring the knight to the kingside.": "The knight moves toward the king's side to help attack there.",
+"Build a solid position.": "This builds a strong position with no weak spots.",
+"Build the chain.": "This builds a chain of pawns that protect each other.",
+"Build your center.": "This puts pawns in the middle of the board.",
+"Castle and let e4 go for now.": "The king castles to safety. The e4 pawn can be won back later.",
+"Castle early.": "Castling early: the king hides in the corner and the rook comes out.",
+"Castle queenside; the rook hits d4.": "Castling on the queen's side. The rook lands on d8 and stares at the d4 pawn.",
+"Castle so the king is safe.": "Castling: the king hides in the corner behind pawns, and the rook comes out to help.",
+"Castle.": "Castling: the king moves to safety and the rook joins the game.",
+"Castle. If Black takes e4, Re1 wins it back.": "Castling. If Black grabs the e4 pawn, the rook can come to e1 and win it back.",
+"Castle. Next comes ...c5.": "Castling keeps the king safe. Next, Black will push the c-pawn to c5.",
+"Castle. White is ahead in development.": "Castling. White has more pieces out and ready to play.",
+"Castle. e4 is safe for now because of tactics on the e-file.": "Castling. The e4 pawn is safe for now, because the rook can set up tricks on the e-file.",
+"Challenge d5 to open lines.": "A pawn challenges d5 to open up the board.",
+"Check, and attack the d5 knight at the same time.": "The queen checks the king and attacks the d5 knight at the same time. Two threats at once!",
+"Control d5 and e4.": "This piece controls the d5 and e4 squares in the middle.",
+"Control d5 from the side.": "This pawn guards the d5 square from the side.",
+"Control e5 and free the c8 bishop.": "This pawn guards e5 and opens a path for the c8 bishop.",
+"Control e5 and prepare ...e5.": "This pawn guards e5 and gets ready to push to e5 later.",
+"Control e5 so the knight can't jump in.": "This guards e5 so White's knight can't jump in there.",
+"Copy White.": "Black makes the same move as White.",
+"Decline the pawn and keep d5 solid.": "Black says no thanks to the free pawn and keeps the d5 pawn strong.",
+"Defend and prepare to castle.": "This protects the piece and gets ready to castle.",
+"Defend b2 and offer to trade queens.": "The queen protects b2 and offers to trade queens.",
+"Defend b7.": "This protects the b7 pawn.",
+"Defend d4.": "This protects the pawn on d4.",
+"Defend d5 and develop.": "This protects the d5 pawn and brings a new piece into the game.",
+"Defend d5 and free the bishop.": "This protects d5 and opens a path for the bishop.",
+"Defend e5 and develop.": "The knight protects the e5 pawn and joins the game.",
+"Defend e5.": "This protects the e5 pawn.",
+"Develop a knight and attack the e5 pawn.": "The knight comes out and attacks the pawn on e5.",
+"Develop and attack d4.": "A piece comes out and attacks the d4 pawn.",
+"Develop and attack e4.": "A piece comes out and attacks the e4 pawn.",
+"Develop and attack e5.": "A piece comes out and attacks the e5 pawn.",
+"Develop and attack the e4 pawn.": "The knight comes out and attacks the e4 pawn.",
+"Develop and control d4.": "A piece comes out and guards the d4 square.",
+"Develop and control e5.": "A piece comes out and guards the e5 square.",
+"Develop and defend d5.": "A piece comes out and protects d5.",
+"Develop and eye c4.": "A piece comes out and aims at the c4 square.",
+"Develop and eye d4.": "A piece comes out and aims at d4.",
+"Develop and fight for d5.": "A piece comes out and fights for the d5 square.",
+"Develop and get ready to castle.": "A piece comes out so the king can castle soon.",
+"Develop and keep c3 free for the pawn.": "The knight comes out to d2, so the c3 square stays free for a pawn.",
+"Develop and pressure d4.": "A piece comes out and attacks the d4 pawn.",
+"Develop and protect d5.": "A piece comes out and protects the d5 pawn.",
+"Develop and stay flexible.": "A knight comes out. It's a useful move that fits with many plans.",
+"Develop first. The pawn can be won back later.": "A piece comes out first. The pawn can be won back later.",
+"Develop simply.": "A piece comes out in a simple, safe way.",
+"Develop the bishop actively.": "The bishop comes out to a square where it can do a lot.",
+"Develop the bishop and attack the knight.": "The bishop comes out and attacks the knight.",
+"Develop the bishop before ...e6.": "The bishop comes out before the e-pawn moves and blocks it in.",
+"Develop the bishop outside the pawns.": "The bishop comes out in front of the pawns, so it won't get stuck behind them.",
+"Develop the bishop toward f2.": "The bishop comes out and aims at the f2 square.",
+"Develop the bishop.": "The bishop comes into the game.",
+"Develop the knight to e2 so the f-pawn can move.": "The knight goes to e2 so the f-pawn can still move forward.",
+"Develop your bishop actively.": "The bishop comes out to a square where it can do a lot.",
+"Develop your bishop.": "The bishop comes into the game.",
+"Develop.": "A new piece comes off the back row so it can help.",
+"Don't take back. Chase the bishop instead (...Nxd5 allows a sacrifice on f7).": "Black doesn't capture back. Instead the knight attacks the bishop, because capturing would let White sacrifice on f7.",
+"Fight for d4 from the side.": "This pawn fights for the d4 square from the side, so White can't own the middle.",
+"Fight for d5.": "This fights for control of the d5 square.",
+"Free the bishop so it can take on c4.": "A pawn moves so the bishop has a path to capture on c4.",
+"Free the c8 bishop.": "A pawn moves so the c8 bishop can get out.",
+"Free the f1 bishop and support d4.": "A pawn moves so the f1 bishop can get out. It also protects d4.",
+"Free the f8 bishop.": "A pawn moves so the f8 bishop can get out.",
+"Gain space and attack the knight again.": "A pawn pushes forward to take more room and attack the knight again.",
+"Get ready for ...f5.": "This gets ready to push the f-pawn and attack the king.",
+"Get ready for Bg2.": "This gets ready to put the bishop on g2.",
+"Get ready to castle.": "This gets ready to castle.",
+"Get ready to put the bishop on g2.": "A pawn moves so the bishop can go to g2 and look down the long slanted line.",
+"Get the bishop out before ...e6.": "The bishop comes out before the e-pawn moves and blocks it in.",
+"Give the bishop a safe square on h2.": "A pawn moves so the bishop has a safe hiding spot on h2.",
+"Give the bishop the h7 square.": "A pawn moves so the bishop can hide on h7.",
+"Give the queen a retreat on c7.": "A pawn moves so the queen can escape to c7 if it gets attacked.",
+"Grab central space.": "A pawn pushes forward to take more room in the middle.",
+"Grab queenside space.": "A pawn pushes forward to take more room on the queen's side.",
+"Grab space and kick the knight.": "A pawn pushes forward to take more room and kick the knight away.",
+"Grab the center and open lines for the queen and bishop.": "A pawn goes to the middle of the board and opens paths for the queen and bishop.",
+"Grab the center.": "A pawn goes to the middle of the board.",
+"Grab the center. The queen already protects d4.": "A pawn goes to the middle of the board. The queen already protects it.",
+"Hit d4 right away.": "This pawn attacks d4 right away.",
+"Hit e4 before d4 arrives.": "This attacks e4 before White can protect it with d4.",
+"Hit the center.": "This pushes against the pawns in the middle.",
+"Hold the extra pawn.": "Black keeps the extra pawn.",
+"Keep the bishop and keep the pressure.": "The bishop stays on the board and keeps pressure on the knight.",
+"Keep the bishop. If Black trades, hxg3 opens the h-file.": "The bishop stays. If Black trades bishops, White's h-pawn captures back and the rook gets an open path.",
+"Keep the pin.": "The pin stays on, so the knight still can't move safely.",
+"Keep your King's Indian setup.": "Black keeps the King's Indian setup: bishop on g7 and the king tucked in.",
+"Kick the knight and grab the center.": "A pawn kicks the knight away and takes the middle of the board.",
+"Kick the knight away.": "A pawn kicks the knight away.",
+"Kick the queen and grab space.": "A pawn kicks the queen away and takes more room.",
+"Make d4 solid.": "This makes the d4 pawn strong and hard to attack.",
+"Make the pyramid: pawns on c3, d4, e3.": "This makes a pawn triangle on c3, d4 and e3. The pawns protect each other.",
+"Match it.": "A pawn goes to the middle too.",
+"More control of d5.": "This gets more control of the d5 square.",
+"More pressure on d4.": "This puts more pressure on the d4 pawn.",
+"Move into a Queen's Gambit.": "This turns the game into a Queen's Gambit, a popular and solid opening.",
+"Move the bishop away with check.": "The bishop runs away and gives check at the same time.",
+"Move the queen to a safe square.": "The queen moves to a safe square.",
+"Move the queen to safety.": "The queen moves away so it doesn't get captured.",
+"Offer a pawn to pull Black's d-pawn away.": "White offers a pawn to pull Black's middle pawn away from the middle.",
+"Offer to trade bishops.": "This offers to trade bishops.",
+"Open the center right away.": "This opens up the middle of the board right away.",
+"Open the center to win it back.": "This opens up the middle to win the pawn back.",
+"Open the e-file.": "This opens the e-file, a column the rooks can use later.",
+"Pile up on the pinned knight. White has a huge attack.": "This attacks the stuck knight again. White has a huge attack on the king.",
+"Pin the knight again.": "This pins the knight again, so it can't move without exposing something behind it.",
+"Pin the knight to the queen.": "The bishop pins the knight to the queen. If the knight moves, the queen can be captured.",
+"Pin the knight.": "This pins the knight, so it can't move without exposing something behind it.",
+"Prepare ...Bg7.": "This gets ready to put the bishop on g7.",
+"Prepare ...Nbd7 and ...e5.": "This gets ready to bring out the knight and push the e-pawn.",
+"Prepare ...b5 to attack White's king.": "This gets ready to push the b-pawn and attack White's king.",
+"Prepare ...b5 to gain space.": "This gets ready to push the b-pawn to take more room.",
+"Prepare ...b5.": "This gets ready to push the b-pawn forward.",
+"Prepare ...d5 with pawn support.": "This gets ready to push the d-pawn, with another pawn backing it up.",
+"Prepare ...d5 without blocking the c8 bishop.": "This gets ready to push the d-pawn without blocking in the bishop.",
+"Prepare ...d5.": "This gets ready to push the d-pawn to d5.",
+"Prepare ...e5.": "This gets ready to push the e-pawn to e5.",
+"Prepare d4 and gain time on the bishop.": "This gets ready to push the d-pawn to d4, which will also attack the bishop.",
+"Prepare d4 and give the bishop a home on c2.": "This gets ready to push d4, and makes a safe spot for the bishop on c2.",
+"Prepare d4 and make room for the bishop to retreat.": "This gets ready to push d4, and makes room for the bishop to back up.",
+"Prepare to take back on c4.": "This gets ready to capture back the pawn on c4.",
+"Protect c4 and plan to win the d4 pawn.": "This protects c4 and plans to win the d4 pawn.",
+"Protect d5 and keep the c8 bishop free.": "This protects d5 and keeps the c8 bishop free to come out.",
+"Protect d5 with a pawn and keep the c8 bishop free.": "A pawn protects d5, and the c8 bishop stays free to come out.",
+"Protect e4 calmly.": "This protects the e4 pawn in a calm, safe way.",
+"Protect e4. Now Bxc6 and Nxe5 is a threat.": "The rook protects e4. Now White threatens to take the knight on c6 and then the e5 pawn.",
+"Push into the center and attack the bishop.": "A pawn pushes into the middle and attacks the bishop.",
+"Push the bishop away first.": "First, a pawn pushes the bishop away.",
+"Push the bishop away.": "A pawn pushes the bishop away.",
+"Put the knight in the center.": "The knight goes to the middle of the board, where it controls lots of squares.",
+"Put the knight on a strong central square.": "The knight goes to a strong square in the middle of the board.",
+"Put the queen on the c-file.": "The queen goes to the c-file, a column it can attack down.",
+"Retreat and attack the bishop.": "The piece backs up and attacks the bishop at the same time.",
+"Retreat but stay on the same diagonal.": "The bishop backs up but stays on the same slanted line.",
+"Retreat the bishop.": "The bishop backs up to safety.",
+"Retreat the knight.": "The knight backs up to safety.",
+"Retreat. The knight supports ...c5.": "The knight backs up. From d7 it helps push the c-pawn to c5.",
+"Sacrifice the knight to pull Black's king out.": "White gives up the knight on purpose to pull Black's king out into the open.",
+"Step back. Trading on g6 helps your pawns.": "The bishop steps back. If White trades on g6, Black's pawns actually get stronger.",
+"Stop ...Bg4 before pushing d4.": "This stops Black's bishop from coming to g4 before White pushes d4.",
+"Stop ...b5, which would hold the pawn.": "This stops Black from pushing to b5, which would keep the extra pawn safe.",
+"Support ...e5.": "This helps push the e-pawn to e5.",
+"Support d4.": "This protects the pawn on d4.",
+"Support d5 and free the f8 bishop.": "This protects d5 and opens a path for the f8 bishop.",
+"Support e5 and free the c8 bishop.": "This protects e5 and opens a path for the c8 bishop.",
+"Support the d5 knight.": "This protects the knight on d5.",
+"Support the e4 knight with a pawn.": "A pawn protects the knight on e4.",
+"Take back toward the center.": "This captures back toward the middle of the board.",
+"Take back with the c-pawn.": "This captures back with the c-pawn.",
+"Take back with the queen.": "This captures back with the queen.",
+"Take back.": "This captures back, so the trade is even.",
+"Take back. Black's king is safe in the center now that queens are gone.": "This captures back. With the queens gone, Black's king is safe in the middle.",
+"Take back. Nc3 can't kick the queen because a pawn is on c3.": "The queen captures back. White's knight can't kick it, because a pawn sits on c3.",
+"Take back. Your c8 bishop is free now.": "This captures back. Now the c8 bishop has a free path out.",
+"Take it.": "This takes the free pawn.",
+"Take the pawn now.": "This takes the pawn now.",
+"Take the pawn.": "This captures the pawn.",
+"Take the pawn. It now attacks the c6 knight.": "This captures the pawn. Now that pawn attacks the knight on c6.",
+"The Najdorf: keep White's pieces off b5.": "The Najdorf move: it keeps White's pieces off the b5 square.",
+"The bishop now attacks the d5 knight.": "The bishop now attacks the knight on d5.",
+"The bishop still aims at f7.": "The bishop still aims at the weak f7 pawn.",
+"The bishop takes the long diagonal.": "The bishop sits on the longest slanted line on the board.",
+"The king has to protect the knight.": "The king steps up to protect the knight.",
+"The knight finds a safe square.": "The knight finds a safe square.",
+"The knight heads to f5 to attack d4.": "The knight heads to f5 to attack the d4 pawn.",
+"The knight retreats.": "The knight backs up.",
+"The pawn on d4 cramps White.": "The pawn on d4 takes away squares from White's pieces.",
+"Trade a side pawn for a center pawn.": "This trades a side pawn for a middle pawn. Middle pawns are more useful.",
+"Trade bishop for knight.": "This trades bishop for knight.",
+"Trade in the center.": "This trades pawns in the middle of the board.",
+"Trade knights. Don't take e5 (Nxe5? Qg5! is strong for Black).": "This trades knights. Don't grab e5, because Black's queen would jump to g5 with a big attack.",
+"Trade pawns.": "This trades pawns.",
+"Trade queens with check.": "This trades queens and gives check.",
+"White adds pressure on d5.": "White puts more pressure on d5.",
+"White adds pressure.": "White puts more pressure on the pawn.",
+"White aims the bishop at f7.": "White aims the bishop at f7, right next to Black's king.",
+"White asks the bishop.": "White pokes the bishop with a pawn.",
+"White attacks b5.": "White attacks the pawn on b5.",
+"White attacks b7 and d5.": "White's queen attacks b7 and d5 at the same time.",
+"White attacks d5 with another pawn.": "White attacks d5 with another pawn.",
+"White attacks the bishop.": "White attacks the bishop.",
+"White attacks your queen.": "White attacks the queen, so it has to move.",
+"White avoids the trade.": "White doesn't take the pawn.",
+"White breaks the pin.": "White gets out of the pin.",
+"White brings the bishop out early.": "White brings the bishop out early.",
+"White builds a big center.": "White puts lots of pawns in the middle of the board.",
+"White builds a center and ignores c4.": "White puts pawns in the middle and doesn't bother winning back c4.",
+"White builds a huge center.": "White puts four pawns in the middle. That's a lot of room, but they can become targets.",
+"White castles on the other side.": "White castles on the other side. Now both sides will attack each other's king.",
+"White castles queenside.": "White castles on the queen's side.",
+"White castles.": "White castles to keep the king safe.",
+"White chases the bishop.": "White chases the bishop.",
+"White checks to avoid the main lines.": "White gives check to stay away from the most popular lines.",
+"White closes the center.": "White pushes a pawn, and the middle of the board gets blocked.",
+"White defends d4.": "White protects the pawn on d4.",
+"White defends e4.": "White protects the pawn on e4.",
+"White develops calmly.": "White brings a piece out calmly.",
+"White develops first.": "White brings a piece out first.",
+"White develops without attacking the queen.": "White brings a piece out without chasing the queen.",
+"White develops.": "White brings a new piece into the game.",
+"White eyes the kingside and the a8 rook.": "White's queen looks at Black's king side and the rook on a8.",
+"White gains space and kicks the knight.": "White pushes a pawn to take room and kick the knight away.",
+"White gets ready to castle.": "White gets ready to castle.",
+"White grabs space.": "White pushes a pawn to take more room.",
+"White grabs the center.": "White puts a pawn in the middle of the board.",
+"White keeps c3 free and avoids ...Bb4.": "White keeps c3 free for a pawn and avoids a pin from Black's bishop.",
+"White kicks your knight.": "White kicks the knight away.",
+"White offers a pawn.": "White offers a pawn.",
+"White opens the center.": "White opens up the middle of the board.",
+"White opens the game.": "White opens up the game.",
+"White pins the knight.": "White pins the knight, so it can't move without exposing the queen.",
+"White plans f3, Qd2 and castling queenside.": "White plans to castle on the queen's side and push pawns at Black's king.",
+"White plays slowly and skips d4.": "White plays slowly and doesn't push d4.",
+"White plays solidly.": "White plays a safe, solid move.",
+"White prepares Bg2.": "White gets ready to put the bishop on g2.",
+"White prepares Nd5 tricks or castling queenside.": "White gets ready for knight tricks on d5, or to castle on the queen's side.",
+"White prepares d4.": "White gets ready to push the d-pawn to d4.",
+"White prepares e4.": "White gets ready to push the e-pawn to e4.",
+"White prepares to castle queenside.": "White gets ready to castle on the queen's side.",
+"White prepares to win c4 back.": "White gets ready to win back the c4 pawn.",
+"White pushes and locks the center.": "White pushes a pawn forward and blocks the middle.",
+"White pushes for space.": "White pushes a pawn forward to take more room.",
+"White pushes instead of taking.": "White pushes the pawn forward instead of capturing.",
+"White pushes past.": "White pushes the pawn past.",
+"White stops ...b5.": "White stops Black from pushing to b5.",
+"White supports d4.": "White protects the d4 pawn.",
+"White supports e4 and plans Be3, Qd2.": "White protects e4 and plans to bring the bishop and queen out.",
+"White supports e4 and prepares g4.": "White protects e4 and gets ready to push the g-pawn.",
+"White supports e4.": "White protects the e4 pawn.",
+"White supports e5.": "White protects the e5 pawn.",
+"White takes back with the knight.": "White captures back with the knight.",
+"White takes back.": "White captures back.",
+"White takes more space.": "White takes more room.",
+"White takes the center.": "White puts a pawn in the middle.",
+"White takes the whole center.": "White puts two pawns in the middle of the board.",
+"White takes.": "White captures.",
+"White threatens h5 to trap the bishop.": "White wants to push h5 next and trap the bishop.",
+"White trades bishops.": "White trades bishops.",
+"White trades pawns.": "White trades pawns.",
+"White tucks the bishop away.": "White moves the bishop back to a safe spot.",
+"White unpins the knight.": "White frees the knight from the pin.",
+"White wants Bg2 too.": "White wants to put the bishop on g2 too.",
+"White wins the pawn back.": "White wins the pawn back.",
+"White's bishop takes the long diagonal.": "White's bishop sits on the long slanted line.",
+"White's knight heads toward f5.": "White's knight heads toward the f5 square.",
+"White's knight moves away.": "White's knight moves away.",
+"Win back the pawn and chase the knight.": "This wins the pawn back and chases the knight.",
+"Win back the pawn.": "This wins the pawn back.",
+"Win the pawn back.": "This wins the pawn back.",
+"Your bishop aims at d4 and b2.": "This bishop aims at d4 and b2."
+};
 const LEVEL={italian:1,london:1,scandi:1,caro:1,qg:2,ruy:2,english:2,french:2,slav:2,kid:3,sicilian:3};
 const LEVEL_NAME=["","Beginner","Intermediate","Advanced"];
 const GLYPH={k:"♚",q:"♛",r:"♜",b:"♝",n:"♞",p:"♟"};
@@ -386,7 +702,7 @@ OPENINGS.forEach(op=>{
   op.vars.forEach((v,vi)=>{
     const g=new Chess(); let node=op.root; node.vars.add(vi);
     for(const e of v.m){
-      const san=Array.isArray(e)?e[0]:e, why=Array.isArray(e)?e[1]:null;
+      const san=Array.isArray(e)?e[0]:e, why=Array.isArray(e)?(KID[e[1]]||e[1]):null;
       const mv=g.move(san); if(!mv)break;
       let ch=node.children.find(c=>c.mv.san===mv.san);
       if(!ch){ch={mv,why,children:[],vars:new Set()};node.children.push(ch);}
@@ -402,7 +718,7 @@ const SF_URL="https://cdnjs.cloudflare.com/ajax/libs/stockfish.js/10.0.2/stockfi
 const Engine={
   w:null,ok:false,listeners:[],chain:Promise.resolve(),
   init(){
-    const p=new Promise(res=>{
+    return new Promise(res=>{
       try{
         const blob=new Blob([`importScripts("${SF_URL}");`],{type:"application/javascript"});
         this.w=new Worker(URL.createObjectURL(blob));
@@ -414,8 +730,6 @@ const Engine={
         this.listeners.forEach(f=>f(l));};
       this.w.postMessage("uci");
     });
-    this.chain=p.then(()=>{},()=>{});
-    return p;
   },
   analyse(fen,ms){
     const job=()=>this.ok?this._sf(fen,ms):Promise.resolve(fallbackSearch(fen));
@@ -470,47 +784,68 @@ function attackersOf(fen,sq,byColor){
   const g=new Chess();if(!g.load(parts.join(" ")))return[];
   return g.moves({verbose:true}).filter(m=>m.to===sq);
 }
-function explainMove(fenBefore,mv,prev,evalAfterW){
-  const me=mv.color, them=other(me), why=[];
+function defendersOf(fen,sq){
+  const g=new Chess(fen);const p=g.get(sq);if(!p)return 0;
+  g.remove(sq);g.put({type:p.type==="k"?"q":p.type,color:other(p.color)},sq);
+  const parts=g.fen().split(" ");parts[1]=p.color;parts[3]="-";
+  const t=new Chess();if(!t.load(parts.join(" ")))return 0;
+  return t.moves({verbose:true}).filter(m=>m.to===sq).length;
+}
+// A piece of `color` the other side can win right now (attacked and unprotected, or attacked by something cheaper).
+function hangingPiece(fen,color){
+  const g=new Chess(fen);let worst=null;
+  g.board().forEach((row,r)=>row.forEach((p,f)=>{
+    if(!p||p.color!==color||p.type==="k"||p.type==="p")return;
+    const sq=FILES[f]+(8-r), att=attackersOf(fen,sq,other(color));if(!att.length)return;
+    const minAtt=Math.min(...att.map(m=>VAL[m.piece]));
+    if(defendersOf(fen,sq)===0||minAtt<VAL[p.type]){if(!worst||VAL[p.type]>VAL[worst.type])worst={type:p.type,sq};}
+  }));
+  return worst;
+}
+// Plain-language reasons for a move, written for a fifth grader.
+function kidFeatures(fenBefore,mv,prev){
+  const me=mv.color,them=other(me),why=[];
   const g=new Chess(fenBefore);
   const wasAttacked=VAL[mv.piece]>=3&&attackersOf(fenBefore,mv.from,them).length>0;
   g.move({from:mv.from,to:mv.to,promotion:mv.promotion});
   const fenAfter=g.fen();
-  if(g.in_checkmate())return "Checkmate. The game is over.";
-  if(mv.flags.includes("k")||mv.flags.includes("q"))why.push("tucks the king away to safety and brings a rook toward the center");
+  if(g.in_checkmate())return {mate:true,list:["Checkmate! The king is trapped, so the game is over."]};
+  if(mv.flags.includes("k")||mv.flags.includes("q"))why.push("Castling hides the king in the corner behind pawns and brings a rook out to help.");
   if(mv.captured){
-    const defended=attackersOf(fenAfter,mv.to,them).length>0;
-    if(prev&&prev.to===mv.to&&prev.captured)why.push(`takes back the ${PNAME[mv.captured]} to restore the material balance`);
-    else if(!defended)why.push(`wins the ${PNAME[mv.captured]} on ${mv.to} for free, because nothing protects it`);
-    else if(VAL[mv.captured]>VAL[mv.piece])why.push(`wins material, since a ${PNAME[mv.captured]} is worth more than a ${PNAME[mv.piece]}`);
-    else why.push(`trades ${PNAME[mv.piece]} for ${PNAME[mv.captured]}`);
+    const P=PNAME[mv.captured],M=PNAME[mv.piece],safe=attackersOf(fenAfter,mv.to,them).length===0;
+    if(prev&&prev.to===mv.to&&prev.captured)why.push(`It captures back on ${mv.to}, so the trade is even.`);
+    else if(safe)why.push(`It captures the ${P} on ${mv.to} for free, because nothing was guarding it.`);
+    else if(VAL[mv.captured]>VAL[mv.piece])why.push(`It captures a ${P}, which is worth more than the ${M} that took it.`);
+    else why.push(`It trades a ${M} for a ${P}.`);
   }
-  if(mv.promotion)why.push("promotes the pawn to a queen");
-  if(g.in_check())why.push("gives check, so the opponent must respond to it");
-  if(wasAttacked&&!mv.captured)why.push(`moves the ${PNAME[mv.piece]} out of danger`);
-  // threats created by the moved piece
-  const parts=fenAfter.split(" ");parts[1]=me;parts[3]="-";
-  const t=new Chess();
+  if(mv.promotion)why.push("The pawn reached the last row, so it turns into a queen!");
+  if(g.in_check())why.push("It puts the king in check, so the other side has to protect the king first.");
+  if(wasAttacked&&!mv.captured)why.push(`It moves the ${PNAME[mv.piece]} away so it doesn't get captured.`);
+  const parts=fenAfter.split(" ");parts[1]=me;parts[3]="-";const t=new Chess();
   if(t.load(parts.join(" "))){
-    const threats=t.moves({square:mv.to,verbose:true}).filter(m=>m.captured&&(VAL[m.captured]>VAL[mv.piece]||attackersOf(fenAfter,m.to,them).length===0)&&m.captured!=="p");
-    if(threats.length)why.push(`attacks the ${threats.map(m=>`${PNAME[m.captured]} on ${m.to}`).join(" and the ")}`);
+    const th=t.moves({square:mv.to,verbose:true}).filter(m=>m.captured&&m.captured!=="p"&&(VAL[m.captured]>VAL[mv.piece]||defendersOf(fenAfter,m.to)===0));
+    if(th.length)why.push(`Now it attacks the ${th.map(m=>`${PNAME[m.captured]} on ${m.to}`).join(" and the ")}. Next turn it could capture ${th.length>1?"one of them":"it"}.`);
   }
-  const backRank=me==="w"?"1":"8";
-  if((mv.piece==="n"||mv.piece==="b")&&mv.from[1]===backRank&&!mv.captured)why.push(`develops the ${PNAME[mv.piece]} toward the center`);
-  if(mv.piece==="p"&&["d4","e4","d5","e5","c4","c5"].includes(mv.to)&&!mv.captured)why.push("fights for the center");
-  if(mv.piece==="r"&&!mv.captured){const file=mv.to[0];const b=new Chess(fenAfter).board();
-    if(b.every(row=>!row[FILES.indexOf(file)]||row[FILES.indexOf(file)].type!=="p"))why.push("puts the rook on an open file");}
-  if(mv.piece==="p"&&["h3","a3","h6","a6"].includes(mv.to))why.push("makes a safe square and stops enemy pieces from using b4/g4 or b5/g5");
-  let s=why.length?cap(why.slice(0,3).join(", and ")) + ".":"The strongest move here. It improves your position and keeps your pieces working together.";
+  const back=me==="w"?"1":"8";
+  if((mv.piece==="n"||mv.piece==="b")&&mv.from[1]===back&&!mv.captured)why.push(`It brings the ${PNAME[mv.piece]} off the back row so it can join the game.`);
+  if(mv.piece==="p"&&["d4","e4","d5","e5","c4","c5"].includes(mv.to)&&!mv.captured)why.push("It puts a pawn in the middle of the board, where it controls important squares.");
+  if(mv.piece==="r"&&!mv.captured){const fi=FILES.indexOf(mv.to[0]);if(new Chess(fenAfter).board().every(row=>!row[fi]||row[fi].type!=="p"))why.push("It puts the rook on a column with no pawns, so the rook can zoom up and down.");}
+  if(mv.piece==="p"&&["h3","a3","h6","a6"].includes(mv.to))why.push("It keeps enemy pieces off important squares and makes a safe hiding spot.");
+  if(mv.piece==="q"&&!mv.captured&&!why.length&&new Chess(fenBefore).history().length<1&&+fenBefore.split(" ")[5]<8)why.push("The queen comes out early. That's risky, because the other side can chase it around.");
+  return {list:why};
+}
+function explainMove(fenBefore,mv,prev,evalAfterW){
+  const f=kidFeatures(fenBefore,mv,prev);
+  if(f.mate)return f.list[0];
+  const s=f.list.length?f.list.slice(0,3).join(" "):"This is the strongest move here. It helps the pieces work together better.";
   return s+" "+evalSentence(evalAfterW,null);
 }
 function evalSentence(w,me){
-  const myV=me===null?0:(me==="w"?w:-w), a=Math.abs(w);
-  if(a>=9000)return w>0?"White has a forced checkmate.":"Black has a forced checkmate.";
-  if(a<40)return "The position is about equal.";
-  const who=w>0?"White":"Black", mine=me!==null&&myV>0;
-  const size=a<100?"slightly better":a<250?"better":"winning";
-  return mine?`You are ${size} here.`:`${who} is ${size} here.`;
+  const a=Math.abs(w), who=w>0?"White":"Black", mine=me!=null&&((me==="w")===(w>0));
+  if(a>=9000)return mine?"You can force checkmate!":`${who} can force checkmate!`;
+  if(a<40)return "Right now the game is about even.";
+  const size=a<100?"a little bit ahead":a<250?"ahead":"way ahead";
+  return mine?`You are ${size}.`:`${who} is ${size}.`;
 }
 function evalLabel(w){
   if(Math.abs(w)>=9000)return w>0?"White mates":"Black mates";
@@ -583,15 +918,23 @@ function arrowSVG(from,to,color,op){
 }
 
 // ---------- Panels ----------
+function sayLine(e){
+  const you=e.color===opp();
+  return `<div class="line"><span class="who ${you?"you":""}"></span><span><b>${you?"You played":"Coach played"} ${e.san}${e.tag?` (${e.tag[1].toLowerCase()})`:""}:</b> ${e.text||"Checking your move…"}</span></div>`;
+}
+// The top box: why the last moves happened, then what to do now.
 function renderStatus(){
-  let cls="opp",ic="↻",main="",sub="";
+  let cls="opp",ic="?",main="",sub="";
   if(S.over){cls="done";ic="✓";main=S.over.kind;sub=S.over.title+". See the summary beside the board.";}
   else if(S.msg){cls="bad";ic="✕";main=S.msg;sub=S.game.turn()===S.side?"Play the move the gold arrow shows.":"";}
-  else if(S.thinking){cls="think";ic="◌";main="Coach is thinking…";sub="Finding the best move for this position.";}
-  else if(S.game.turn()===opp()){cls="opp";ic="?";main=`Make any move for ${COLOR[opp()]}`;sub=`You're the opponent. Try the popular moves or anything else.`;}
-  else if(S.best){cls="best";ic="!";main=`Best move: ${describe(S.best.mv)}`;sub=S.auto?"The coach will play it in a moment.":"Play the gold arrow move, or press Play it.";}
+  else if(S.thinking){cls="think";ic="◌";main="Coach is thinking…";sub="Looking for the best answer to your move.";}
+  else if(S.game.turn()===opp()){cls="opp";ic="?";main=`Your turn: move any ${COLOR[opp()]} piece`;sub="Try one of the popular moves, or anything you want.";}
+  else if(S.best){cls="best";ic="!";main=`Coach's best move: ${describe(S.best.mv)} (${S.best.mv.san})`;sub="Why: "+S.best.text;}
+  const recent=S.hist.slice(-2);
+  if(S.best&&!S.over&&S.game.turn()===S.side&&recent.length===2)recent.shift();
+  const say=recent.length?`<div class="say">${recent.map(sayLine).join("")}</div>`:"";
   const st=$("status");st.className="status "+cls;
-  st.innerHTML=`<span class="ic" aria-hidden="true">${ic}</span><span>${main}${sub?`<small>${sub}</small>`:""}</span>`;
+  st.innerHTML=`${say}<div class="nowline"><span class="ic" aria-hidden="true">${ic}</span><span>${main}${sub?`<small>${sub}</small>`:""}</span></div>`;
   const w=S.evalW, pct=Math.max(4,Math.min(96,50+50*Math.tanh(w/400)));
   $("evalfill").style.width=pct+"%";
   $("evaltext").textContent=evalLabel(w);
@@ -599,10 +942,10 @@ function renderStatus(){
 function bookStatus(){
   if(S.book){
     const names=varNames(S.book);
-    return `<div class="bookline"><span class="tag book">In book</span><span class="muted">${names.length===1?names[0]:`${S.op.name} · ${names.length} variations possible`}</span></div>`;
+    return `<div class="bookline"><span class="tag book">Standard moves</span><span class="muted">${names.length===1?names[0]:`${S.op.name} · ${names.length} variations possible`}</span></div>`;
   }
   const off=S.hist.findIndex(h=>h.offBook);
-  return `<div class="bookline"><span class="tag off">Out of book</span><span class="muted">Since ${off>=0?num(off+1,S.hist[off].san):"the start"}. The engine finds the best moves now.</span></div>`;
+  return `<div class="bookline"><span class="tag off">New territory</span><span class="muted">Since ${off>=0?num(off+1,S.hist[off].san):"the start"}. You left the usual moves, so the computer finds the best moves now.</span></div>`;
 }
 function renderNow(){
   const c=$("now");let h="";
@@ -679,7 +1022,7 @@ function applyMove(mv,fromBook){
   if(S.book){
     const child=S.book.children.find(c=>c.mv.san===m.san);
     if(child){S.book=child;entry.bookNode=child;}
-    else{entry.note=S.book.children.length?`Out of book: ${m.san} isn't one of the main moves of the ${S.op.name}. The engine takes over from here.`:`The main line is over. The engine finds the best moves from here.`;S.book=null;entry.offBook=true;}
+    else{entry.note=S.book.children.length?`New territory: ${m.san} isn't one of the usual moves in the ${S.op.name}. From here the computer finds the best moves.`:`The usual moves are over. From here the computer finds the best moves.`;S.book=null;entry.offBook=true;}
   }
   S.hist.push(entry);
   return entry;
@@ -697,7 +1040,7 @@ async function advance(){
     const v=S.op.vars[S.book.end];markVar(S.book.end);
     S.over={kind:"End of the main line",title:v.name,text:v.note+" That's where opening theory for this line ends. Press Keep going to continue with the engine's best moves.",canContinue:true};
   } else if(!S.extended&&!S.book&&plies()>=PHASE_END){
-    S.over={kind:"Opening phase complete",title:"The opening is over",text:`You reached move ${Math.floor(plies()/2)}. ${evalSentence(S.evalW,null)} From here it's a middlegame. Press Keep going to continue with the engine's best moves.`,canContinue:true};
+    S.over={kind:"Opening phase complete",title:"The opening is over",text:`You reached move ${Math.floor(plies()/2)}. ${evalSentence(S.evalW,S.side)} From here it's a middlegame. Press Keep going to continue with the engine's best moves.`,canContinue:true};
   }
   if(S.over){gradeLast(null,token);render();return;}
   S.thinking=true;render();
@@ -725,37 +1068,42 @@ async function advance(){
     render();
   }
 }
-// Grade the opponent's last move once we know the new evaluation.
+// Grade the opponent's (your) last move once we know the new evaluation, in plain words.
 function gradeLast(a){
   const e=S.hist[plies()-1];
   if(!e||e.tag||e.color!==opp())return;
   if(e.bookNode){
     const n=varNames(e.bookNode);
-    e.tag=["book","Book"];
-    e.text=`${e.bookNode.why} ${n.length===1?`This is the ${n[0]}.`:""}`;
+    e.tag=["book","Standard move"];
+    e.text=`${e.bookNode.why}${n.length===1?` This line is called the ${n[0]}.`:""}`;
     return;
   }
-  if(!a){e.tag=["off","Played"];e.text="";return;}
+  const f=kidFeatures(e.fenBefore,e.mv,plies()>1?S.hist[plies()-2].mv:null);
+  const what=(f.list||[]).slice(0,2).join(" ");
+  if(!a){e.tag=["off","Played"];e.text=what;return;}
   const sign=opp()==="w"?1:-1, before=S.evalBeforeOpp??S.evalW, loss=Math.max(0,(before-S.evalW)*sign);
   let tag,txt;
-  if(loss<40){tag=["good","Good move"];txt="A sound move. The position stays balanced for "+COLOR[opp()]+".";}
-  else if(loss<100){tag=["inacc","Inaccuracy"];txt="Playable, but not the most accurate.";}
-  else if(loss<250){tag=["mistake","Mistake"];txt="This gives the coach a real advantage.";}
-  else{tag=["blunder","Blunder"];txt="A serious error. Watch how the coach punishes it.";}
-  if(loss>=40&&e.oppBestSan&&e.oppBestSan!==e.san)txt+=` Better was ${e.oppBestSan}.`;
-  e.tag=tag;e.text=txt+" "+evalSentence(S.evalW,opp());
+  if(loss<40){tag=["good","Good move"];txt="Good move!";}
+  else if(loss<100){tag=["inacc","Okay move"];txt="Okay, but there was a better move.";}
+  else if(loss<250){tag=["mistake","Mistake"];txt="Mistake. This lets the coach get ahead.";}
+  else{tag=["blunder","Big mistake"];txt="Big mistake!";}
+  let t=`${txt} ${what}`;
+  const hang=loss>=100?hangingPiece(S.game.fen(),opp()):null;
+  if(hang)t+=` But now your ${PNAME[hang.type]} on ${hang.sq} can be captured.`;
+  if(loss>=40&&e.oppBest&&e.oppBest.san!==e.san)t+=` A better move was ${describe(e.oppBest)} (${e.oppBest.san}).`;
+  e.tag=tag;e.text=t.replace(/\s+/g," ").trim()+" "+evalSentence(S.evalW,opp());
 }
 function playBest(){
   if(!S.best||S.over)return;
   const mv=S.best.mv, entry=applyMove(mv), src=S.best.src;
-  entry.tag=src==="book"?["book","Book"]:["best","Best move"];
+  entry.tag=src==="book"?["book","Standard move"]:["best","Best move"];
   entry.text=S.best.text;
   render(entry.mv);advance();
 }
 function playOpp(mv){
   const best=S.oppBest;
   const entry=applyMove(mv);
-  entry.oppBestSan=best?best.san:null;
+  entry.oppBest=best||null;
   render(entry.mv);advance();
 }
 function tryMove(from,to){
@@ -771,7 +1119,7 @@ function tryMove(from,to){
 function rebuildTo(n){
   const moves=S.hist.slice(0,n);
   S.game=new Chess();S.hist=[];S.book=S.op.root;
-  moves.forEach(e=>{const ne=applyMove(e.mv);ne.tag=e.tag;ne.text=e.text;ne.oppBestSan=e.oppBestSan;});
+  moves.forEach(e=>{const ne=applyMove(e.mv);ne.tag=e.tag;ne.text=e.text;ne.oppBest=e.oppBest;});
 }
 function undo(){
   let n=plies();
