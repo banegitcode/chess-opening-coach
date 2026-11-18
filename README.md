@@ -1,21 +1,19 @@
 # Chess Opening Coach
 
-Learn chess openings by playing them. Pick an opening, pick your side, and the board shows an arrow for the next move, with a plain-English reason for it.
+Learn chess openings by testing them. Pick an opening, then play the opponent and make any move you like. The coach answers with the best move and explains why, move by move, until the opening is over.
 
 ## How it works
 
-1. **Choose an opening.** Each card shows its level (Beginner, Intermediate or Advanced) and how many of its variations you've played. There are 11 openings with 49 variations in all:
-   - White openings: Italian Game, Ruy Lopez, Queen's Gambit, London System, English Opening
-   - Black openings: Sicilian Najdorf, French Defense, Caro-Kann, King's Indian, Scandinavian, Slav
-2. **Choose a side.** Play as the side that uses the opening, or as the opponent to learn how to face it. "Switch sides" changes this at any time.
-3. **Follow the arrows.** Gold arrows are your moves and blue arrows are the opponent's. The status line above the board always says what to do, and the coach panel explains why each move is played.
+1. **Pick an opening.** There are 11 openings, each labeled Beginner, Intermediate or Advanced. The coach plays the opening side:
+   - White openings (you play Black): Italian Game, Ruy Lopez, Queen's Gambit, London System, English Opening
+   - Black openings (you play White): Sicilian Najdorf, French Defense, Caro-Kann, King's Indian, Scandinavian, Slav
+2. **Make any move for the opponent.** Drag a piece, or tap it and then tap a square. Popular moves are listed with the variation each one leads to, but any legal move is allowed.
+3. **Read the coach's answer.** A gold arrow shows the best reply, with a plain-English explanation of why it's best. Every move goes into a move-by-move log:
+   - **Your moves** are graded Book, Good move, Inaccuracy, Mistake or Blunder, with the better move named when there was one.
+   - **The coach's moves** come from opening theory while you stay in the main lines (49 variations), and from the Stockfish engine once you leave them.
+4. **It runs until the opening is over:** when a main line ends, or at move 15 once you've left the main lines. Press "Keep going" to continue with the engine.
 
-- **Moving pieces:** drag a piece, or tap it and then tap a square. You can also press "Play it for me".
-- **Choosing your own variation:** when you have several good moves, each one is listed with the variation it leads to. Hover over an option to highlight its arrow.
-- **Choosing the opponent's reply:** with "Opponent's replies: I pick" turned on, you pick the opponent's move whenever it has more than one variation. Use the buttons or move the piece on the board. Switch to "Coach picks" and the coach chooses for you, preferring variations you haven't seen yet.
-- **Mistakes:** a move that isn't in the opening is taken back, and the arrow stays up. "Undo my move" steps back one of your moves.
-
-Your progress is saved in your browser.
+An evaluation bar shows who is better. "Take back" undoes your last move, and "Best moves: I'll play them" lets you play the coach's moves yourself.
 
 ## Run it
 
@@ -40,9 +38,9 @@ Openings live in the `OPENINGS` array in `index.html`. Each variation is a full 
       ...] }
 ```
 
-A move written as `["SAN", "why"]` carries its explanation. A bare `"SAN"` reuses the explanation already given for that same move in an earlier variation. Lines that share moves merge into one tree automatically. The side that plays the opening should have only one book move in each position. The opponent can have several.
+A move written as `["SAN", "why"]` carries its explanation. A bare `"SAN"` reuses the explanation already given for that same move in an earlier variation. Lines that share moves merge into one tree automatically. The opening side should have only one book move in each position, because that's the move the coach plays. The opponent can have several.
 
-Move legality comes from [chess.js](https://github.com/jhlywa/chess.js) 0.10.3, loaded from cdnjs.
+Move legality comes from [chess.js](https://github.com/jhlywa/chess.js) 0.10.3 and analysis from [Stockfish.js](https://github.com/nmrugg/stockfish.js) 10.0.2, both loaded from cdnjs. Stockfish runs in a Web Worker for about one second per position. If it can't load, a small built-in engine takes over.
 
 ## License
 
